@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import React,{useState} from 'react';
+import Cart from './components/Cart';
+import PrimaryPage from './components/PrimaryPage';
+import Sidenav from './components/Sidenav';
+
 
 function App() {
+  const [navToggle, setNavToggle] = useState(false);
+
+  const handleClick = () => {
+    setNavToggle(!navToggle)
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router basename='/'>
+      <div className="MainContainer">
+          <Sidenav navToggle={navToggle}/>
+          <Routes>
+            <Route exact path='/' element={<PrimaryPage/>}/>
+            <Route exact path='/cart' element={<Cart navToggle={navToggle} handleClick={handleClick} />}/>
+          </Routes>
+      </div>
+      
+    </Router>
+    
   );
 }
 
