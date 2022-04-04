@@ -16,7 +16,7 @@ function App() {
   return (
     <Router basename='/'>
       <div className="MainContainer">
-          <Sidenav navToggle={navToggle}/>
+          <Sidenav navToggle={navToggle}  handleClick={handleClick}/>
           <Routes>
             <Route exact path='/' element={<PrimaryPage/>}/>
             <Route exact path='/cart' element={<Cart navToggle={navToggle} handleClick={handleClick} />}/>

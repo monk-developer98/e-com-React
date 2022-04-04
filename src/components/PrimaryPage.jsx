@@ -8,8 +8,13 @@ const PrimaryPage = () => {
   const [menuToggle, setMenuToggle] = useState(false);
 
   useEffect(() => {
-   var data = JSON.parse(localStorage.getItem('CART')) 
-   setCart([...data])
+   var data = JSON.parse(localStorage.getItem('CART'))
+   if(data){
+    setCart([...data])
+   }else{
+     var data = []
+    localStorage.setItem('CART',JSON.stringify(data))
+   }
   }, [])
   
   const addCart = (Product,index) => {
