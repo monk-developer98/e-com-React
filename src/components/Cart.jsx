@@ -1,22 +1,21 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom';
 
-const Cart = ({ navToggle ,handleClick}) => {
+const Cart = ({ navToggle ,handleClick , addItem}) => {
   const [subtotal, setSubtotal] = useState(0)
   
   
-  const OrderData = JSON.parse(localStorage.getItem(`CART`))
-  console.log(OrderData);
+  // const OrderData = JSON.parse(localStorage.getItem(`CART`))
+  // console.log(OrderData);
   var total = 0;
   useEffect(() => {
-    if (OrderData.length>0) {
-      OrderData.forEach((value) => {
+    if (addItem.length>0) {
+      addItem.forEach((value) => {
         total = total + value.price*value.Quantity;
       })
       setSubtotal(total);
-      localStorage.setItem('CART',JSON.stringify(OrderData))
     }
-  }, [OrderData]);
+  }, [addItem]);
 
   return (
     <div className='continer'>
@@ -27,9 +26,9 @@ const Cart = ({ navToggle ,handleClick}) => {
         <div className="heading">
           My Orders List
         </div>
-        { OrderData ? OrderData.map((item,index)=>(
+        { addItem ? addItem.map((item,index)=>(
 
-          <div className="favItem">
+          <div className="favItem" key={item.id}>
               <div className="itemCart">
                 <img src={item.url} alt="img" />
                 <div className="itemName">
@@ -45,7 +44,7 @@ const Cart = ({ navToggle ,handleClick}) => {
           )):null}
         <div className="itemTotal">
           <p>Total</p>
-          <span>${OrderData.length ? subtotal.toFixed(2) : 0}</span>
+          <span>${addItem.length ? subtotal.toFixed(2) : 0}</span>
         </div>
         <Link to="/">
           <button>Proced to Pay</button>

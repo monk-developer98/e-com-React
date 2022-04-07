@@ -8,6 +8,12 @@ import Sidenav from './components/Sidenav';
 
 function App() {
   const [navToggle, setNavToggle] = useState(false);
+  const [ addItem , setAddItem ] = useState([]);
+
+  const CART = (Data) =>{
+    setAddItem(Data)
+  }
+  console.log(addItem);
 
   const handleClick = () => {
     setNavToggle(!navToggle)
@@ -18,8 +24,8 @@ function App() {
       <div className="MainContainer">
           <Sidenav navToggle={navToggle}  handleClick={handleClick}/>
           <Routes>
-            <Route exact path='/' element={<PrimaryPage/>}/>
-            <Route exact path='/cart' element={<Cart navToggle={navToggle} handleClick={handleClick} />}/>
+            <Route exact path='/' element={<PrimaryPage CART={CART} addItem={addItem} />}/>
+            <Route exact path='/cart' element={<Cart navToggle={navToggle} handleClick={handleClick} addItem={addItem} />}/>
           </Routes>
       </div>
       

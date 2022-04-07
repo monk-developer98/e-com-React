@@ -2,21 +2,24 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Products } from "./Products";
 
-const PrimaryPage = () => {
+const PrimaryPage = ({CART,addItem}) => {
   const [cart, setCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0)
   const [menuToggle, setMenuToggle] = useState(false);
 
   useEffect(() => {
-   var data = JSON.parse(localStorage.getItem('CART'))
+   var data = addItem
    if(data){
     setCart([...data])
    }else{
-     var data = []
-    localStorage.setItem('CART',JSON.stringify(data))
+     var data = []   
    }
   }, [])
   
+  const  clickButton = ()=>{
+      CART(cart)
+  }
+
   const addCart = (Product,index) => {
     var NewList = Products
     var count =  NewList[index].Quantity
@@ -69,7 +72,6 @@ const PrimaryPage = () => {
         total = total + value.price*value.Quantity;
       });
       setSubtotal(total);
-      localStorage.setItem('CART',JSON.stringify(cart))
     }
   }, [cart]);
 
@@ -156,7 +158,7 @@ const PrimaryPage = () => {
               <span>${cart.length ? subtotal.toFixed(2) : 0}</span>
             </div>
             <Link to="/cart">
-            <button  >Checkout</button>
+            <button  onClick={clickButton}>Checkout</button>
             </Link>
           </div>
         </div>
